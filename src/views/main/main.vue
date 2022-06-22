@@ -1,7 +1,4 @@
-<template>
-  <div>Main</div>
-  <el-button type="success">Success</el-button>
-</template>
+<template><div></div></template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'

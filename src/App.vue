@@ -1,8 +1,5 @@
 <template>
   <div id="app">
-    <!-- <h2>{{ $store.name }}</h2> -->
-    <router-link to="/login">登录</router-link>
-    <router-link to="/main">首页</router-link>
     <router-view></router-view>
   </div>
 </template>
@@ -15,4 +12,8 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less"></style>
+<style lang="less">
+.app {
+  height: 100%;
+}
+</style>
