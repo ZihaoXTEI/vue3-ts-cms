@@ -18,25 +18,39 @@
 
 <script lang="ts">
 import { defineComponent, reactive, ref } from 'vue'
+import { useStore } from 'vuex'
 import { ElForm } from 'element-plus'
+
+import localCache from '@/utils/localcache'
 
 import { rules } from '../config/account-config'
 
 export default defineComponent({
   name: 'login-account',
   setup() {
+    const store = useStore()
+
     const account = reactive({
-      name: '',
-      password: ''
+      name: localCache.getCache('name') ?? '',
+      password: localCache.getCache('password') ?? ''
     })
 
     const formRef = ref<InstanceType<typeof ElForm>>()
 
     // 账号登录
-    const loginAction = () => {
+    const loginAction = (isKeepPassword: boolean) => {
       formRef.value?.validate((valid) => {
         if (valid) {
-          console.log('登录')
+          if (isKeepPassword) {
+            localCache.setCache('name', account.name)
+            localCache.setCache('password', account.password)
+          } else {
+            localCache.deleteCache('name')
+            localCache.deleteCache('password')
+          }
+
+          // 进行登录验证
+          store.dispatch('login/accountLoginAction', { ...account })
         }
       })
     }

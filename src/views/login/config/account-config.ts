@@ -19,8 +19,8 @@ export const rules = {
       trigger: 'blur'
     },
     {
-      pattern: /^[a-zA-Z0-9]{8,}$/,
-      message: '密码必须是8位以上字符',
+      pattern: /^[a-zA-Z0-9]{6,}$/,
+      message: '密码必须是6位以上字符',
       trigger: 'blur'
     }
   ]
