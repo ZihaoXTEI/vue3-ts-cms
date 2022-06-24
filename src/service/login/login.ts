@@ -1,7 +1,7 @@
 import myRequest from '../index'
 
-import { IAccount, ILoginResult } from './type'
-import { IDataType } from '../type'
+import type { IAccount, ILoginResult } from './type'
+import type { IDataType } from '../type'
 
 // 定义请求路径
 enum LoginAPI {

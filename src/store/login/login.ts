@@ -9,9 +9,9 @@ import {
 } from '@/service/login/login'
 import localCache from '@/utils/localcache'
 
-import { ILoginState } from './type'
-import { IRootState } from '../type'
-import { IAccount } from '@/service/login/type'
+import type { ILoginState } from './type'
+import type { IRootState } from '../type'
+import type { IAccount } from '@/service/login/type'
 
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
