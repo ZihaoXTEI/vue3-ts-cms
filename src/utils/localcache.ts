@@ -1,6 +1,6 @@
 // 本地存储
 class LocalCache {
-  storage = window.localStorage
+  storage = window.sessionStorage
 
   setCache(key: string, value: any) {
     this.storage.setItem(key, JSON.stringify(value))
