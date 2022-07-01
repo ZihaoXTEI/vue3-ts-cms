@@ -19,16 +19,16 @@ export function createPageData(url: string, newData: any) {
 }
 
 // 修改数据
-export function editPageDate(url: string, editData: any) {
+export function editPageData(url: string, id: any, editData: any) {
   return myRequset.patch<IDataType>({
-    url: url,
+    url: url + id,
     data: editData
   })
 }
 
 // 删除数据:  /users/id
-export function deletePageDate(url: string, id: any) {
+export function deletePageData(url: string, id: any) {
   return myRequset.delete<IDataType>({
-    url: url + `/${id}`
+    url: url + id
   })
 }

@@ -85,7 +85,7 @@ export default defineComponent({
     },
     formItems: {
       type: Array as PropType<IFormItem[]>,
-      require: true
+      required: true
     },
     labelWidth: {
       type: String,
@@ -125,7 +125,7 @@ export default defineComponent({
 
   .card-header {
     display: flex;
-    font-weight: 500;
+    font-weight: 700;
   }
 }
 </style>
