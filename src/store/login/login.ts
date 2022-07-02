@@ -7,7 +7,7 @@ import {
   getUserInfoById,
   getUserMenusByRoleId
 } from '@/service/login/login'
-import localCache from '@/utils/localcache'
+import sessionCache from '@/utils/sessioncache'
 import { mapMenuToRoutes } from '@/utils/map-menu'
 
 import type { ILoginState } from './type'
@@ -54,7 +54,7 @@ const loginModule: Module<ILoginState, IRootState> = {
         const loginResult = await accountLoginRequest(payload)
         const { id, token } = loginResult.data
         commit('changeToken', token)
-        localCache.setCache('token', token)
+        sessionCache.setCache('token', token)
 
         // 初始化数据请求：获取所有部门、菜单、角色数据
         dispatch('getInitialDataAction', null, { root: true })
@@ -63,37 +63,37 @@ const loginModule: Module<ILoginState, IRootState> = {
         const userInfoResult = await getUserInfoById(id)
         const userInfo = userInfoResult.data
         commit('changeUserInfo', userInfo)
-        localCache.setCache('userinfo', userInfo)
+        sessionCache.setCache('userinfo', userInfo)
 
         // 请求用户菜单
         const userMenusResult = await getUserMenusByRoleId(userInfo.role.id)
         const userMenus = userMenusResult.data
         commit('changeUserMenus', userMenus)
-        localCache.setCache('usermenus', userMenus)
+        sessionCache.setCache('usermenus', userMenus)
 
         // 跳到首页
         router.push('/main')
       } catch {
-        localCache.clearCache()
+        sessionCache.clearCache()
         console.log('登录错误，请联系管理员')
       }
     },
 
     // 读取本地存储用户数据
     loadLocalCache({ commit, dispatch }) {
-      const token = localCache.getCache('token')
+      const token = sessionCache.getCache('token')
       if (token) {
         commit('changeToken', token)
         // 初始化数据请求：获取所有部门、菜单、角色数据
         dispatch('getInitialDataAction', null, { root: true })
       }
 
-      const userInfo = localCache.getCache('userinfo')
+      const userInfo = sessionCache.getCache('userinfo')
       if (userInfo) {
         commit('changeUserInfo', userInfo)
       }
 
-      const userMenus = localCache.getCache('usermenus')
+      const userMenus = sessionCache.getCache('usermenus')
       if (userMenus) {
         commit('changeUserMenus', userMenus)
       }

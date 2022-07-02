@@ -1,7 +1,7 @@
 <template>
   <div class="page-content">
     <my-table
-      :title="pageTitle"
+      :pageTitle="pageTitle"
       :listData="dataList"
       :listCount="dataCount"
       v-bind="contentTableConfig"
@@ -10,7 +10,7 @@
       <template #header-handler>
         <el-button
           type="primary"
-          size="medium"
+          size="default"
           @click="handleCreateBtnClick"
           plain
           >创建{{ pageTitle }}</el-button
@@ -31,24 +31,29 @@
 
       <!-- 创建日期列 -->
       <template #createAt="scope">
-        <span>{{ $filters.formatUTCTime(scope.row.createAt) }}</span>
+        <span>{{ formatUTCString(scope.row.createAt) }}</span>
       </template>
 
       <!-- 更新日期列 -->
       <template #updateAt="scope">
-        <span>{{ $filters.formatUTCTime(scope.row.updateAt) }}</span>
+        <span>{{ formatUTCString(scope.row.updateAt) }}</span>
       </template>
       <!-- 操作（编辑/删除）列 -->
       <template #handler="scope">
         <div class="handler-btn">
-          <el-button icon="Edit" size="mini" link @click="handleEditBtnClick">
+          <el-button
+            icon="Edit"
+            type="primary"
+            link
+            @click="handleEditBtnClick(scope.row)"
+          >
             编辑
           </el-button>
           <el-button
             icon="Delete"
-            size="mini"
+            type="danger"
             link
-            @click="handleDeleteBtnClick"
+            @click="handleDeleteBtnClick(scope.row)"
           >
             删除
           </el-button>
@@ -73,6 +78,8 @@
 import { defineComponent, ref, watch, computed } from 'vue'
 
 import { useStore } from '@/store'
+
+import { formatUTCString } from '@/utils/date-format'
 
 export default defineComponent({
   name: 'page-content',
@@ -103,8 +110,10 @@ export default defineComponent({
     // 获取操作权限
 
     // 双向绑定pageInfo
-    const pageInfo = ref({ currentPage: 1, pageSize: 10 })
-    watch(pageInfo, () => getPageData())
+    const pageInfo = ref({ currentPage: 1, pageSize: 5 })
+    watch(pageInfo, () => {
+      getPageData()
+    })
 
     // 发送网络请求获取表格数据
     const getPageData = (queryInfo: any = {}) => {
@@ -128,7 +137,7 @@ export default defineComponent({
     )
 
     // 筛选出其它动态插槽名称
-    const otherPropsSlots = props.contentTableConfig?.propsList.filter(
+    const otherPropsSlots = props.contentTableConfig?.columnData.filter(
       (item: any) => {
         switch (item.slotName) {
           case 'status':
@@ -170,10 +179,15 @@ export default defineComponent({
       getPageData,
       handleCreateBtnClick,
       handleEditBtnClick,
-      handleDeleteBtnClick
+      handleDeleteBtnClick,
+      formatUTCString
     }
   }
 })
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.page-content {
+  margin-top: 10px;
+}
+</style>

@@ -1,6 +1,5 @@
-// 本地存储
-class LocalCache {
-  storage = window.localStorage
+class SessionCache {
+  storage = window.sessionStorage
 
   setCache(key: string, value: any) {
     this.storage.setItem(key, JSON.stringify(value))
@@ -22,4 +21,4 @@ class LocalCache {
   }
 }
 
-export default new LocalCache()
+export default new SessionCache()

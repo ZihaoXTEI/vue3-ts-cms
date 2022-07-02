@@ -4,7 +4,7 @@
     <div class="header">
       <slot name="header">
         <!-- 左侧标题 -->
-        <div class="title">{{ title }}</div>
+        <div class="title">{{ pageTitle }}数据列表</div>
         <!-- 右侧按钮区 -->
         <div class="handler">
           <slot name="header-handler"></slot>
@@ -22,7 +22,7 @@
       <!-- 是否显示选择框列 -->
       <el-table-column
         v-if="showSelectColumn"
-        type="selection "
+        type="selection"
         align="center"
         width="60"
       >
@@ -30,7 +30,7 @@
       <!-- 是否显示索引值列 -->
       <el-table-column
         v-if="showIndexColumn"
-        type="index "
+        type="index"
         label="序号"
         align="center"
         width="80"
@@ -50,7 +50,7 @@
     <!-- 底部区域 -->
     <div class="footer" v-if="showFooter">
       <slot name="footer">
-        <el-pagination
+        <!-- <el-pagination
           :current-page="pageInfo.currentPage"
           :page-size="pageInfo.pageSize"
           :page-sizes="[10, 20, 30]"
@@ -59,27 +59,36 @@
           @size-change="handleSizeChange"
           @current-chnage="handleCurrentChange"
         >
-        </el-pagination>
+        </el-pagination> -->
+        <el-pagination
+          v-model:current-page="currentPage"
+          v-model:page-size="pageSize"
+          :page-sizes="[5, 10, 15, 20]"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="listCount"
+          class="pagination"
+        />
       </slot>
     </div>
   </el-card>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType, ref, watch } from 'vue'
+import { IColumnData } from '../types'
 
 export default defineComponent({
   name: 'my-table',
   props: {
     /**
-     * 头部标题
+     * 头部标题（中文）
      */
-    title: {
+    pageTitle: {
       type: String,
       default: '表格'
     },
     /**
-     * 页面名称
+     * 页面名称（英文）
      */
     // pageName: {
     //   type: String,
@@ -103,7 +112,7 @@ export default defineComponent({
      * 每列数据内容
      */
     columnData: {
-      type: Array,
+      type: Array as PropType<IColumnData[]>,
       required: true
     },
     /**
@@ -149,17 +158,27 @@ export default defineComponent({
     }
 
     // 新版建议===》使用v-model双向绑定currentPage、pageSize
-    const handleCurrentChange = (currentPage: number) => {
+    /*     const handleCurrentChange = (currentPage: number) => {
       emit('update:pageInfo', { ...props.pageInfo, currentPage })
     }
-
     const handleSizeChange = (pageSize: number) => {
       emit('update:pageInfo', { ...props.pageInfo, pageSize })
-    }
+    } */
+
+    const currentPage = ref(props.pageInfo.currentPage)
+    const pageSize = ref(props.pageInfo.pageSize)
+
+    watch(currentPage, (currentPage) => {
+      emit('update:pageInfo', { ...props.pageInfo, currentPage })
+    })
+    watch(pageSize, (pageSize) => {
+      emit('update:pageInfo', { ...props.pageInfo, pageSize })
+    })
+
     return {
-      handleSelectionChange,
-      handleCurrentChange,
-      handleSizeChange
+      currentPage,
+      pageSize,
+      handleSelectionChange
     }
   }
 })
@@ -185,8 +204,9 @@ export default defineComponent({
 .footer {
   margin-top: 15px;
 
-  .el-pagination {
-    text-align: right;
+  .pagination {
+    display: flex;
+    justify-content: flex-end;
   }
 }
 </style>
