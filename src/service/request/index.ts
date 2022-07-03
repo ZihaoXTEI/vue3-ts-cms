@@ -58,6 +58,7 @@ class MyRequest {
         this.loading?.close()
 
         const data = res.data
+
         if (data === '-1001') {
           console.log('请求数据发送错误，请联系网站管理员。')
         } else {

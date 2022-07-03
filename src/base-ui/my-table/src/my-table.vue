@@ -75,7 +75,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref, watch } from 'vue'
-import { IColumnData } from '../types'
+import type { IColumnData } from '../types'
 
 export default defineComponent({
   name: 'my-table',

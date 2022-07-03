@@ -37,7 +37,9 @@ import {
   ElDialog,
   ElTree,
   ElCard,
-  ElIcon
+  ElIcon,
+  ElPopconfirm,
+  ElNotification
 } from 'element-plus'
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
@@ -78,7 +80,9 @@ const components = [
   ElDialog,
   ElTree,
   ElCard,
-  ElIcon
+  ElIcon,
+  ElPopconfirm,
+  ElNotification
 ]
 
 export default function (app: App): void {

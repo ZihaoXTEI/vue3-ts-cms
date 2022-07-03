@@ -49,14 +49,19 @@
           >
             编辑
           </el-button>
-          <el-button
-            icon="Delete"
-            type="danger"
-            link
-            @click="handleDeleteBtnClick(scope.row)"
+
+          <el-popconfirm
+            confirm-button-text="确认"
+            cancel-button-text="取消"
+            icon="DeleteFilled"
+            icon-color="#F56C6C"
+            title="确定删除该条数据吗？"
+            @confirm="handleDeleteBtnClick(scope.row)"
           >
-            删除
-          </el-button>
+            <template #reference>
+              <el-button icon="Delete" type="danger" link> 删除 </el-button>
+            </template>
+          </el-popconfirm>
         </div>
       </template>
 
@@ -78,6 +83,8 @@
 import { defineComponent, ref, watch, computed } from 'vue'
 
 import { useStore } from '@/store'
+
+import { ElNotification } from 'element-plus'
 
 import { formatUTCString } from '@/utils/date-format'
 
@@ -166,9 +173,15 @@ export default defineComponent({
 
     // 删除数据按钮点击事件
     const handleDeleteBtnClick = (item: any) => {
-      store.dispatch('system/deletePageDataAction', {
-        pageName: props.pageName,
-        id: item.id
+      console.log(item)
+      // store.dispatch('system/deletePageDataAction', {
+      //   pageName: props.pageName,
+      //   id: item.id
+      // })
+      ElNotification({
+        title: '成功',
+        message: '删除成功',
+        type: 'success'
       })
     }
     return {
@@ -176,6 +189,7 @@ export default defineComponent({
       dataList,
       dataCount,
       otherPropsSlots,
+
       getPageData,
       handleCreateBtnClick,
       handleEditBtnClick,

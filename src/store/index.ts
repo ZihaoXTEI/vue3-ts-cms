@@ -25,21 +25,23 @@ const store = createStore<IRootState>({
     },
 
     changeEntireMenu(state, list) {
-      state.entireRole = list
+      state.entireMenu = list
     }
   },
   actions: {
     async getInitialDataAction({ commit }) {
+      // [[※代码优化※]]await 并发请求方式
+      // let [foo, bar] = await Promise.all([getFoo(), getBar()]);
       // 请求所有部门数据
       const departmentResult = await getPageListData('/department/list', {
         offset: 0,
-        size: 1000
+        size: 100
       })
       const { list: departmentList } = departmentResult.data
       // 请求所有角色数据
       const roleResult = await getPageListData('/role/list', {
         offset: 0,
-        size: 1000
+        size: 100
       })
       const { list: roleList } = roleResult.data
       // 请求所有菜单数据

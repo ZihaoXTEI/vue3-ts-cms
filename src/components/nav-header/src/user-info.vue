@@ -3,7 +3,7 @@
     <el-dropdown size="large" @command="handleCommand">
       <!-- 头像 -->
       <el-avatar
-        src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        src="https://storage.360buyimg.com/i.imageUpload/c0e8e8f7bac031353931363039373734353132_mid.jpg"
       />
       <template #dropdown>
         <el-dropdown-menu>

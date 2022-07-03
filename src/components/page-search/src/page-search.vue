@@ -1,21 +1,29 @@
 <template>
   <div class="page-search">
-    <my-form v-bind="searchFormConfig" v-model="formData">
-      <template #footer>
-        <div class="footer-btn">
-          <el-button icon="RefreshLeft" @click="handleResetBtnClick"
-            >重置</el-button
-          >
-          <el-button
-            type="primary"
-            plain
-            icon="Search"
-            @click="handleQueryBtnClick"
-            >搜索</el-button
-          >
+    <el-card class="my-form">
+      <!-- 标题 -->
+      <template #header>
+        <div class="card-header">
+          <span>高级检索</span>
         </div>
       </template>
-    </my-form>
+      <my-form v-bind="searchFormConfig" v-model="formData">
+        <template #footer>
+          <div class="footer-btn">
+            <el-button icon="RefreshLeft" @click="handleResetBtnClick"
+              >重置</el-button
+            >
+            <el-button
+              type="primary"
+              plain
+              icon="Search"
+              @click="handleQueryBtnClick"
+              >搜索</el-button
+            >
+          </div>
+        </template>
+      </my-form>
+    </el-card>
   </div>
 </template>
 
@@ -62,8 +70,14 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-.footer-btn {
-  text-align: right;
-  padding: 0 40px 20px 0;
+.page-search {
+  .card-header {
+    display: flex;
+    font-weight: 700;
+  }
+  .footer-btn {
+    text-align: right;
+    padding: 0 40px 20px 0;
+  }
 }
 </style>

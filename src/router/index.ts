@@ -2,7 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 // type 表示导入的是类型文件
 import type { RouteRecordRaw } from 'vue-router'
 
-import localCache from '@/utils/localcache'
+import sessionCache from '@/utils/sessioncache'
 import { firstMenu } from '@/utils/map-menu'
 
 const routes: RouteRecordRaw[] = [
@@ -36,7 +36,7 @@ const router = createRouter({
 // 路由跳转拦截守卫
 router.beforeEach((to) => {
   if (to.path !== '/login') {
-    const token = localCache.getCache('token')
+    const token = sessionCache.getCache('token')
     if (!token) {
       return '/login'
     }

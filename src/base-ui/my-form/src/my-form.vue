@@ -1,18 +1,11 @@
 <template>
-  <el-card class="my-form">
-    <!-- 标题 -->
-    <template #header>
-      <div class="card-header">
-        <span>高级检索</span>
-      </div>
-    </template>
-
+  <div class="my-form">
     <!-- 表单区域 -->
     <el-form :label-width="labelWidth">
       <el-row>
         <template v-for="item in formItems" :key="item.label">
-          <!-- <el-col v-bind="colLayout"> -->
-          <el-col :md="12" :lg="8" :xl="6">
+          <el-col v-bind="colLayout">
+            <!-- <el-col :md="12" :lg="8" :xl="6" :sm="24"> -->
             <el-form-item
               v-if="!item.isHidden"
               :label="item.label"
@@ -69,12 +62,12 @@
     <div class="footer">
       <slot name="footer"></slot>
     </div>
-  </el-card>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { IFormItem } from '../types'
+import type { IFormItem } from '../types'
 
 export default defineComponent({
   name: 'my-form',
@@ -103,6 +96,10 @@ export default defineComponent({
         md: 12,
         sm: 24,
         xs: 24
+        // sm: { span: 24 },
+        // md: { span: 12 },
+        // lg: { span: 8 },
+        // xl: { span: 6 }
       })
     }
   },
@@ -112,6 +109,7 @@ export default defineComponent({
     const handleValueChange = (value: any, field: string) => {
       emit('update:modelValue', { ...props.modelValue, [field]: value })
     }
+
     return {
       handleValueChange
     }
@@ -122,10 +120,5 @@ export default defineComponent({
 <style lang="less" scoped>
 .my-form {
   padding-top: 22px;
-
-  .card-header {
-    display: flex;
-    font-weight: 700;
-  }
 }
 </style>
