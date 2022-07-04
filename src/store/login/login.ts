@@ -8,7 +8,7 @@ import {
   getUserMenusByRoleId
 } from '@/service/login/login'
 import sessionCache from '@/utils/sessioncache'
-import { mapMenuToRoutes } from '@/utils/map-menu'
+import { mapMenusToPermissions, mapMenuToRoutes } from '@/utils/map-menu'
 
 import type { ILoginState } from './type'
 import type { IRootState } from '../type'
@@ -45,6 +45,8 @@ const loginModule: Module<ILoginState, IRootState> = {
       })
 
       // 根据菜单信息生成权限内容
+      const permissions = mapMenusToPermissions(userMenus)
+      state.permissions = permissions
     }
   },
   actions: {
@@ -98,8 +100,7 @@ const loginModule: Module<ILoginState, IRootState> = {
         commit('changeUserMenus', userMenus)
       }
     }
-  },
-  getters: {}
+  }
 }
 
 export default loginModule

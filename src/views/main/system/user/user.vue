@@ -52,7 +52,7 @@ export default defineComponent({
     const pageName = ref('users')
     const pageTitle = ref('用户')
 
-    // page-modal相关回调函数
+    // page-modal的hook相关回调函数
     // 处理密码输入框逻辑
     const createCallback = () => {
       const passwordItem = modalConfig.formItems.find(
@@ -91,6 +91,7 @@ export default defineComponent({
 
     const [pageModalRef, defaultInfo, handleCreateData, handleEditData] =
       usePageModal(createCallback, editCallback)
+
     return {
       pageName,
       pageTitle,

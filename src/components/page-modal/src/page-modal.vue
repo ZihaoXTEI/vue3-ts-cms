@@ -52,6 +52,9 @@ export default defineComponent({
       type: Object,
       required: true
     },
+    /**
+     * 初始值
+     */
     defalutInfo: {
       type: Object,
       default: () => ({})

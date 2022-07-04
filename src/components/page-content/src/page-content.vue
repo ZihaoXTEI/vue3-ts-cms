@@ -9,6 +9,7 @@
     >
       <template #header-handler>
         <el-button
+          v-if="isCreate"
           type="primary"
           size="default"
           @click="handleCreateBtnClick"
@@ -42,6 +43,7 @@
       <template #handler="scope">
         <div class="handler-btn">
           <el-button
+            v-if="isUpdate"
             icon="Edit"
             type="primary"
             link
@@ -51,6 +53,7 @@
           </el-button>
 
           <el-popconfirm
+            v-if="isDelete"
             confirm-button-text="确认"
             cancel-button-text="取消"
             icon="DeleteFilled"
@@ -87,6 +90,7 @@ import { useStore } from '@/store'
 import { ElNotification } from 'element-plus'
 
 import { formatUTCString } from '@/utils/date-format'
+import { usePermission } from '@/hooks/usePermission'
 
 export default defineComponent({
   name: 'page-content',
@@ -115,6 +119,10 @@ export default defineComponent({
     const store = useStore()
 
     // 获取操作权限
+    const isCreate = usePermission(props.pageName, 'create')
+    const isDelete = usePermission(props.pageName, 'delete')
+    const isUpdate = usePermission(props.pageName, 'update')
+    const isQuery = usePermission(props.pageName, 'query')
 
     // 双向绑定pageInfo
     const pageInfo = ref({ currentPage: 1, pageSize: 5 })
@@ -124,6 +132,7 @@ export default defineComponent({
 
     // 发送网络请求获取表格数据
     const getPageData = (queryInfo: any = {}) => {
+      if (!isQuery) return
       store.dispatch('system/getPageListAction', {
         pageName: props.pageName,
         queryInfo: {
@@ -189,6 +198,11 @@ export default defineComponent({
       dataList,
       dataCount,
       otherPropsSlots,
+
+      isCreate,
+      isDelete,
+      isUpdate,
+      isQuery,
 
       getPageData,
       handleCreateBtnClick,
