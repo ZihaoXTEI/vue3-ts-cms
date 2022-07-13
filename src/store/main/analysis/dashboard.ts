@@ -1,19 +1,21 @@
 import { Module } from 'vuex'
 
 import {
+  getAmountList,
   getCategoryGoodsCount,
   getCategoryGoodsSale,
   getCategoryGoodsFavor,
   getAddressGoodsSale
 } from '@/service/main/analysis/dashboard'
 
-import { IDashboardState } from './type'
+import type { IDashboardState } from './type'
 import { IRootState } from '@/store/type'
 
 const dashboardModule: Module<IDashboardState, IRootState> = {
   namespaced: true,
   state() {
     return {
+      topPanelData: [],
       categoryGoodsCount: [],
       categoryGoodsSale: [],
       categoryGoodsFavor: [],
@@ -21,6 +23,10 @@ const dashboardModule: Module<IDashboardState, IRootState> = {
     }
   },
   mutations: {
+    changeTopPanelData(state, list) {
+      state.topPanelData = list
+    },
+
     changeCategoryGoodsCount(state, list) {
       state.categoryGoodsCount = list
     },
@@ -38,6 +44,12 @@ const dashboardModule: Module<IDashboardState, IRootState> = {
     }
   },
   actions: {
+    // 获取顶部统计数据
+    async getTopPanelDataAction({ commit }) {
+      const result = await getAmountList()
+      commit('changeTopPanelData', result.data)
+    },
+
     // 获取图表数据
     async getDashboardEchartsAction({ commit }) {
       const [

@@ -1,10 +1,17 @@
 import myRequest from '../../index'
 
 enum DashboardAPI {
+  amountList = '/goods/amount/list',
   categoryGoodsCount = '/goods/category/count',
   categoryGoodsSale = '/goods/category/sale',
   categoryGoodsFavor = '/goods/category/favor',
   addressGoodsSale = '/goods/address/sale'
+}
+
+export function getAmountList() {
+  return myRequest.get({
+    url: DashboardAPI.amountList
+  })
 }
 
 export function getCategoryGoodsCount() {

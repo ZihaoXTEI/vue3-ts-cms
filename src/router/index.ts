@@ -30,7 +30,11 @@ const routes: RouteRecordRaw[] = [
 
 const router = createRouter({
   routes,
-  history: createWebHashHistory()
+  history: createWebHashHistory(),
+  scrollBehavior() {
+    // 始终滚动到顶部
+    return { top: 0 }
+  }
 })
 
 // 路由跳转拦截守卫

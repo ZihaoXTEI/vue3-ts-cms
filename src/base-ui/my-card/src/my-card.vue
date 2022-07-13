@@ -31,13 +31,17 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .my-card {
+  margin-top: 10px;
+
   &:deep(.el-card__header) {
     padding: 10px 20px !important;
   }
 
   .card-header {
     display: flex;
+    align-items: center;
     height: 30px;
+    font-weight: 700;
   }
 
   .item {

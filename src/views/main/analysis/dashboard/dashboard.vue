@@ -1,5 +1,15 @@
 <template>
   <div class="dashboard">
+    <!-- 顶部数据统计区域 -->
+    <el-row :gutter="10">
+      <template v-for="item in topPanelData" :key="item.title">
+        <el-col :md="12" :lg="6" :xl="6">
+          <statistical-panel :panelData="item"></statistical-panel>
+        </el-col>
+      </template>
+    </el-row>
+
+    <!-- 统计图标区域 -->
     <el-row :gutter="10">
       <el-col :span="7">
         <my-card title="分类商品数量(饼图)">
@@ -45,9 +55,12 @@ import {
   MapEcharts
 } from '@/components/page-echarts'
 
+import StatisticalPanel from '@/components/statistical-panel'
+
 export default defineComponent({
   name: 'dashboard',
   components: {
+    StatisticalPanel,
     PieEcharts,
     RoseEcharts,
     LineEcharts,
@@ -57,7 +70,11 @@ export default defineComponent({
   setup() {
     const store = useStore()
     // 请求数据
+    store.dispatch('dashboard/getTopPanelDataAction')
     store.dispatch('dashboard/getDashboardEchartsAction')
+
+    // 获取顶部统计数据
+    const topPanelData = computed(() => store.state.dashboard.topPanelData)
 
     // 获取数据
     const categoryGoodsCount = computed(() => {
@@ -92,6 +109,7 @@ export default defineComponent({
     })
 
     return {
+      topPanelData,
       categoryGoodsCount,
       categoryGoodsSale,
       categoryGoodsFavor,
@@ -101,8 +119,12 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-.content-row {
-  margin-top: 20px;
+<style lang="less" scoped>
+.dashboard {
+  background-color: #f5f5f5;
+
+  .content-row {
+    margin-top: 20px;
+  }
 }
 </style>
