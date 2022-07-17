@@ -22,11 +22,21 @@
       <!-- 状态列 -->
       <template #status="scope">
         <el-tag
+          v-if="scope.row.enable != null"
           :type="scope.row.enable ? 'success' : 'danger'"
           effect="plain"
           round
         >
           {{ scope.row.enable ? '启用' : '禁用' }}
+        </el-tag>
+
+        <el-tag
+          v-else-if="scope.row.status != null"
+          :type="scope.row.status ? 'success' : 'danger'"
+          effect="plain"
+          round
+        >
+          {{ scope.row.status ? '启用' : '禁用' }}
         </el-tag>
       </template>
 
@@ -39,6 +49,7 @@
       <template #updateAt="scope">
         <span>{{ formatUTCString(scope.row.updateAt) }}</span>
       </template>
+
       <!-- 操作（编辑/删除）列 -->
       <template #handler="scope">
         <div class="handler-btn">
@@ -103,6 +114,13 @@ export default defineComponent({
       required: true
     },
     /**
+     * VueX模块名称
+     */
+    moduleName: {
+      type: String,
+      default: 'system'
+    },
+    /**
      * 页面标题（中文：用户、角色）
      */
     pageTitle: {
@@ -133,7 +151,7 @@ export default defineComponent({
     // 发送网络请求获取表格数据
     const getPageData = (queryInfo: any = {}) => {
       if (!isQuery) return
-      store.dispatch('system/getPageListAction', {
+      store.dispatch(`${props.moduleName}/getPageListAction`, {
         pageName: props.pageName,
         queryInfo: {
           offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
@@ -146,10 +164,10 @@ export default defineComponent({
 
     // 获取列表数据
     const dataList = computed(() =>
-      store.getters['system/getListData'](props.pageName)
+      store.getters[`${props.moduleName}/getListData`](props.pageName)
     )
     const dataCount = computed(() =>
-      store.getters['system/getListCount'](props.pageName)
+      store.getters[`${props.moduleName}/getListCount`](props.pageName)
     )
 
     // 筛选出其它动态插槽名称
@@ -183,7 +201,7 @@ export default defineComponent({
     // 删除数据按钮点击事件
     const handleDeleteBtnClick = (item: any) => {
       console.log(item)
-      // store.dispatch('system/deletePageDataAction', {
+      // store.dispatch(`${props.moduleName}/deletePageDataAction`, {
       //   pageName: props.pageName,
       //   id: item.id
       // })

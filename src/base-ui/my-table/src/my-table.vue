@@ -188,7 +188,7 @@ export default defineComponent({
 .header {
   display: flex;
   height: 48px;
-  padding: 0 5px;
+  padding: 0 0;
   justify-content: space-between;
   align-items: center;
 
@@ -207,6 +207,17 @@ export default defineComponent({
   .pagination {
     display: flex;
     justify-content: flex-end;
+  }
+}
+
+// 解决 el-table el-table-column 组件中 使用插槽 加载 el-image 组件预览图片 层级过低问题
+// https://blog.csdn.net/weixin_43245095/article/details/123246885
+
+.el-table {
+  & ::v-deep th.el-table__cell,
+  ::v-deep td.el-table__cell {
+    // 设置position 使得 子元素不与其产生新的层叠关系
+    position: static;
   }
 }
 </style>

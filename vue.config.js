@@ -8,7 +8,7 @@ const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
 module.exports = defineConfig({
   transpileDependencies: true,
   outputDir: './build',
-  // publicPath: './', // 部署至服务器时需要注释掉
+  // publicPath: './', // 部署至服务器时需要
 
   devServer: {
     proxy: {

@@ -1,55 +1,37 @@
 import { Module } from 'vuex'
 import { IRootState } from '@/store/type'
-import type { ISystemState } from './type'
+import type { IProductState } from './type'
 
 import {
   getPageListData,
   deletePageData,
   createPageData,
   editPageData
-} from '@/service/main/system/system'
+} from '@/service/main/product/product'
 
-const systemModule: Module<ISystemState, IRootState> = {
+const productModule: Module<IProductState, IRootState> = {
   namespaced: true,
   state() {
     return {
-      usersList: [],
-      usersCount: 0,
-      roleList: [],
-      roleCount: 0,
-      menuList: [],
-      menuCount: 0,
-      departmentList: [],
-      departmentCount: 0
+      categoryList: [],
+      categoryCount: 0,
+      goodsList: [],
+      goodsCount: 0
     }
   },
   mutations: {
-    changeUsersList(state, list: any[]) {
-      state.usersList = list
+    changeCategoryList(state, list: any[]) {
+      state.categoryList = list
     },
-    changeUsersCount(state, count: number) {
-      state.usersCount = count
-    },
-
-    changeRoleList(state, list: any[]) {
-      state.roleList = list
-    },
-    changeRoleCount(state, count: number) {
-      state.roleCount = count
+    changeCategoryCount(state, count: number) {
+      state.categoryCount = count
     },
 
-    changeMenuList(state, list: any[]) {
-      state.menuList = list
+    changeGoodsList(state, list: any[]) {
+      state.goodsList = list
     },
-    changeMenuCount(state, count: number) {
-      state.menuCount = count
-    },
-
-    changeDepartmentList(state, list: any[]) {
-      state.departmentList = list
-    },
-    changeDepartmentCount(state, count: number) {
-      state.departmentCount = count
+    changeGoodsCount(state, count: number) {
+      state.goodsCount = count
     }
   },
   actions: {
@@ -139,4 +121,4 @@ const systemModule: Module<ISystemState, IRootState> = {
   }
 }
 
-export default systemModule
+export default productModule
