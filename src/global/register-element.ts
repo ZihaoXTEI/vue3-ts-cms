@@ -40,7 +40,9 @@ import {
   ElIcon,
   ElPopconfirm,
   ElNotification,
-  ElDescriptions
+  ElDescriptions,
+  ElTimeline,
+  ElTimelineItem
 } from 'element-plus'
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
@@ -84,7 +86,9 @@ const components = [
   ElIcon,
   ElPopconfirm,
   ElNotification,
-  ElDescriptions
+  ElDescriptions,
+  ElTimeline,
+  ElTimelineItem
 ]
 
 export default function (app: App): void {

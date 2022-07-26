@@ -17,13 +17,7 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  onBeforeUnmount,
-  ref,
-  shallowRef,
-  onMounted
-} from 'vue'
+import { defineComponent, onBeforeUnmount, ref, shallowRef } from 'vue'
 
 import '@wangeditor/editor/dist/css/style.css'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
@@ -36,14 +30,7 @@ export default defineComponent({
     const editorRef = shallowRef()
 
     // 内容 HTML
-    const valueHtml = ref('<p>hello</p>')
-
-    // 模拟 ajax 异步获取内容
-    onMounted(() => {
-      setTimeout(() => {
-        valueHtml.value = '<p>模拟 Ajax 异步设置内容</p>'
-      }, 1500)
-    })
+    const valueHtml = ref('')
 
     const toolbarConfig = {}
     const editorConfig = { placeholder: '请输入内容...' }
