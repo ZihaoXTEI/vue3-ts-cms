@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue'
+import { defineComponent, ref } from 'vue'
 
 import PageSearch from '@/components/page-search'
 import PageContent from '@/components/page-content'
@@ -30,7 +30,7 @@ import { contentTableConfig } from './config/content.config'
 import { usePageSearch } from '@/hooks/usePageSearch'
 import { usePageModal } from '@/hooks/usePageModal'
 
-import { useStore } from '@/store'
+// import { useStore } from '@/store'
 
 export default defineComponent({
   name: 'category',
@@ -46,8 +46,10 @@ export default defineComponent({
     const moduleName = ref('product')
     const pageTitle = ref('商品类别')
 
-    const [pageModalRef, defaultInfo, handleCreateData, handleEditData] =
-      usePageModal(undefined, undefined)
+    const [handleCreateData, handleEditData] = usePageModal(
+      undefined,
+      undefined
+    )
 
     return {
       pageName,
